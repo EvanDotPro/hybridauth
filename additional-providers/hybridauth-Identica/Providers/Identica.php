@@ -6,9 +6,9 @@
 */
 
 /**
-* Hybrid_Providers_Identica
+* HybridAuth_Providers_Identica
 */
-class Hybrid_Providers_Identica extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Identica extends HybridAuth_Provider_Model_OAuth1
 {
        /**
     * IDp wrappers initializer
@@ -87,7 +87,7 @@ class Hybrid_Providers_Identica extends Hybrid_Provider_Model_OAuth1
             }
 
             if( $responseud ){
-                $uc = new Hybrid_User_Contact();
+                $uc = new HybridAuth_User_Contact();
 
                 $uc->identifier   = @ $responseud->id;
                 $uc->displayName  = @ $responseud->name;
@@ -146,7 +146,7 @@ class Hybrid_Providers_Identica extends Hybrid_Provider_Model_OAuth1
         $activities = ARRAY();
 
         foreach( $response as $item ){
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
 
             $ua->id                 = @ $item->id;
             $ua->date               = @ $item->created_at;

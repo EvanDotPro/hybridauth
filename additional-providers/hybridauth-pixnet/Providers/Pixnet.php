@@ -19,7 +19,7 @@
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Pixnet.html
  */
-class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Pixnet extends HybridAuth_Provider_Model_OAuth1
 {
     function initialize()
     {
@@ -91,7 +91,7 @@ class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
         $contacts = array();
 
         foreach( $response->friend_pairs as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = @ $item->id;
             $uc->displayName  = @ $item->display_name;
@@ -162,7 +162,7 @@ class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
             }
 
             foreach ( $response->articles as $item ) {
-                $ua = new Hybrid_User_Activity();
+                $ua = new HybridAuth_User_Activity();
                 $ua->id                 = @ $item->id;
                 $ua->date               = @ $item->public_at;
                 $ua->text               = @ $item->title;
@@ -180,7 +180,7 @@ class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
 
             foreach ( $response->news as $item ) {
                 if ($item->content_type == 'blog') {
-                    $ua = new Hybrid_User_Activity();
+                    $ua = new HybridAuth_User_Activity();
                     $ua->id                 = @ $item->blog_article->id;
                     $ua->date               = @ $item->blog_article->public_at;
                     $ua->text               = @ $item->blog_article->title;

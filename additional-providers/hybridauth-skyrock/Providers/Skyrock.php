@@ -10,9 +10,9 @@
 */
 
 /**
-* Hybrid_Providers_Skyrock provider adapter based on OAuth1 protocol
+* HybridAuth_Providers_Skyrock provider adapter based on OAuth1 protocol
 */
-class Hybrid_Providers_Skyrock extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Skyrock extends HybridAuth_Provider_Model_OAuth1
 {
     /**
     * IDp wrappers initializer
@@ -121,7 +121,7 @@ class Hybrid_Providers_Skyrock extends Hybrid_Provider_Model_OAuth1
 
             if( $response && count( $response->friends ) ){
                 foreach( $response->friends as $item ){
-                    $uc = new Hybrid_User_Contact();
+                    $uc = new HybridAuth_User_Contact();
 
                     $uc->identifier   = (property_exists($item,'id_user'))?$item->id_user:"";
                     $uc->displayName  = (property_exists($item,'username'))?$item->username:"";
@@ -161,7 +161,7 @@ class Hybrid_Providers_Skyrock extends Hybrid_Provider_Model_OAuth1
         $activities = ARRAY();
 
         foreach( $response as $item ){
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
 
             $ua->id                 = (property_exists($item,'id_event'))?$item->id_event:"";
             $ua->date               = (property_exists($item,'timestamp'))?$item->timestamp:"";

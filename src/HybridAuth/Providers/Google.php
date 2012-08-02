@@ -6,11 +6,11 @@
 */
 
 /**
- * Hybrid_Providers_Google provider adapter based on OAuth2 protocol
+ * HybridAuth_Providers_Google provider adapter based on OAuth2 protocol
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Google.html
  */
-class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
+class HybridAuth_Providers_Google extends HybridAuth_Provider_Model_OAuth2
 {
     // default permissions
     public $scope = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.google.com/m8/feeds/";
@@ -42,7 +42,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
             }
         }
 
-        Hybrid_Auth::redirect( $this->api->authorizeUrl( $parameters ) );
+        HybridAuth_Auth::redirect( $this->api->authorizeUrl( $parameters ) );
     }
 
     /**
@@ -105,7 +105,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
         $contacts = ARRAY();
 
         foreach( $response->feed->entry as $idx => $entry ){
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->email        = isset($entry->{'gd$email'}[0]->address) ? (string) $entry->{'gd$email'}[0]->address : '';
             $uc->displayName  = isset($entry->title->{'$t'}) ? (string) $entry->title->{'$t'} : '';

@@ -6,9 +6,9 @@
 */
 
 /**
-* Hybrid_Providers_px500 (500px.com)
+* HybridAuth_Providers_px500 (500px.com)
 */
-class Hybrid_Providers_px500 extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_px500 extends HybridAuth_Provider_Model_OAuth1
 {
        /**
     * IDp wrappers initializer

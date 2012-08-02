@@ -6,9 +6,9 @@
 */
 
 /**
-* Hybrid_Providers_Tumblr
+* HybridAuth_Providers_Tumblr
 */
-class Hybrid_Providers_Tumblr extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Tumblr extends HybridAuth_Provider_Model_OAuth1
 {
        /**
     * IDp wrappers initializer

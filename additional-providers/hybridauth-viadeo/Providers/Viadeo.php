@@ -6,9 +6,9 @@
 */
 
 /**
- * Hybrid_Providers_Viadeo
+ * HybridAuth_Providers_Viadeo
  */
-class Hybrid_Providers_Viadeo extends Hybrid_Provider_Model
+class HybridAuth_Providers_Viadeo extends HybridAuth_Provider_Model
 {
    /**
     * IDp wrappers initializer
@@ -19,7 +19,7 @@ class Hybrid_Providers_Viadeo extends Hybrid_Provider_Model
             throw new Exception( "Your application id and secret are required in order to connect to {$this->providerId}.", 4 );
         }
 
-        require_once Hybrid_Auth::$config["path_libraries"] . "Viadeo/ViadeoAPI.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "Viadeo/ViadeoAPI.php";
 
         if( $this->token( "access_token" ) ){
             $this->api = new ViadeoAPI( $this->token( "access_token" ) );
@@ -45,7 +45,7 @@ class Hybrid_Providers_Viadeo extends Hybrid_Provider_Model
 
             $url = $this->api->getAuthorizationURL();
 
-            Hybrid_Auth::redirect( $url );
+            HybridAuth_Auth::redirect( $url );
         }
         catch ( ViadeoException $e ){
             throw new Exception( "Authentification failed! An error occured during {$this->providerId} authentication.", 5 );

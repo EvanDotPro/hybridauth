@@ -19,7 +19,7 @@
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Murmur.html
  */
-class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Murmur extends HybridAuth_Provider_Model_OAuth1
 {
     function initialize()
     {
@@ -48,7 +48,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
         $this->token( 'request_token_secret',  $tokens['oauth_token_secret'] );
 
         # Build authorize link & redirect user to provider authorisation web page
-        Hybrid_Auth::redirect( $tokens['xoauth_request_auth_url'] );
+        HybridAuth_Auth::redirect( $tokens['xoauth_request_auth_url'] );
     }*/
 
     /**
@@ -101,7 +101,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
         $contacts = array();
 
         foreach( $response as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = @ $item->id;
             $uc->displayName  = @ $item->name;
@@ -161,7 +161,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 
         if ( $stream == 'me' ) {
             foreach ( $response as $item ) {
-                $ua = new Hybrid_User_Activity();
+                $ua = new HybridAuth_User_Activity();
                 $ua->id                 = @ $item->id;
                 $ua->date               = @ $item->timestamp;
                 $ua->text               = @ $item->text;
@@ -175,7 +175,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
         } else {
             foreach ( $response->news as $item ) {
                 if ($item->content_type == 'blog') {
-                    $ua = new Hybrid_User_Activity();
+                    $ua = new HybridAuth_User_Activity();
                     $ua->id                 = @ $item->status->id;
                     $ua->date               = @ $item->status->public_at;
                     $ua->text               = @ $item->status->text;

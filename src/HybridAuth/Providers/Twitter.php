@@ -6,9 +6,9 @@
 */
 
 /**
-* Hybrid_Providers_Twitter provider adapter based on OAuth1 protocol
+* HybridAuth_Providers_Twitter provider adapter based on OAuth1 protocol
 */
-class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Twitter extends HybridAuth_Provider_Model_OAuth1
 {
     /**
     * IDp wrappers initializer
@@ -88,7 +88,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
 
             if( $response && count( $response ) ){
                 foreach( $response as $item ){
-                    $uc = new Hybrid_User_Contact();
+                    $uc = new HybridAuth_User_Contact();
 
                     $uc->identifier   = (property_exists($item,'id'))?$item->id:"";
                     $uc->displayName  = (property_exists($item,'name'))?$item->name:"";
@@ -146,7 +146,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
         $activities = ARRAY();
 
         foreach( $response as $item ){
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
 
             $ua->id                 = (property_exists($item,'id'))?$item->id:"";
             $ua->date               = (property_exists($item,'created_at'))?strtotime($item->created_at):"";

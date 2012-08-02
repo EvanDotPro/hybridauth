@@ -6,13 +6,13 @@
 */
 
 /**
- * Hybrid_Providers_LinkedIn provider adapter based on OAuth1 protocol
+ * HybridAuth_Providers_LinkedIn provider adapter based on OAuth1 protocol
  *
- * Hybrid_Providers_LinkedIn use linkedinPHP library created by fiftyMission Inc.
+ * HybridAuth_Providers_LinkedIn use linkedinPHP library created by fiftyMission Inc.
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_LinkedIn.html
  */
-class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
+class HybridAuth_Providers_LinkedIn extends HybridAuth_Provider_Model
 {
     /**
     * IDp wrappers initializer
@@ -23,8 +23,8 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
             throw new Exception( "Your application key and secret are required in order to connect to {$this->providerId}.", 4 );
         }
 
-        require_once Hybrid_Auth::$config["path_libraries"] . "OAuth/OAuth.php";
-        require_once Hybrid_Auth::$config["path_libraries"] . "LinkedIn/LinkedIn.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "OAuth/OAuth.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "LinkedIn/LinkedIn.php";
 
         $this->api = new LinkedIn( array( 'appKey' => $this->config["keys"]["key"], 'appSecret' => $this->config["keys"]["secret"], 'callbackUrl' => $this->endpoint ) );
 
@@ -46,7 +46,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
             $this->token( "oauth_token_secret", $response['linkedin']['oauth_token_secret'] );
 
             # redirect user to LinkedIn authorisation web page
-            Hybrid_Auth::redirect( LINKEDIN::_URL_AUTH . $response['linkedin']['oauth_token'] );
+            HybridAuth_Auth::redirect( LINKEDIN::_URL_AUTH . $response['linkedin']['oauth_token'] );
         }
         else{
             throw new Exception( "Authentification failed! {$this->providerId} returned an invalid Token.", 5 );
@@ -148,7 +148,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
         $contacts = ARRAY();
 
         foreach( $connections->person as $connection ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier  = (string) $connection->id;
             $uc->displayName = (string) $connection->{'last-name'} . " " . $connection->{'first-name'};
@@ -225,7 +225,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
             $person = $update->{'update-content'}->person;
             $share  = $update->{'update-content'}->person->{'current-share'};
 
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
 
             $ua->id                 = (string) $update->id;
             $ua->date               = (string) $update->timestamp;

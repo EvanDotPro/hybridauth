@@ -19,7 +19,7 @@
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_QQ.html
  */
-class Hybrid_Providers_QQ extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_QQ extends HybridAuth_Provider_Model_OAuth1
 {
     function initialize()
     {
@@ -97,7 +97,7 @@ class Hybrid_Providers_QQ extends Hybrid_Provider_Model_OAuth1
         $contacts = array();
 
         foreach( $response->data->info as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = @ $item->fansnum;
             $uc->displayName  = @ $item->nick;
@@ -169,7 +169,7 @@ class Hybrid_Providers_QQ extends Hybrid_Provider_Model_OAuth1
 
         foreach ( $response->data->info  as $item )
         {
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
             $ua->id                 = @ $item->id;
             $ua->date               = @ $item->timestamp;
             $ua->text               = @ $item->origtext;

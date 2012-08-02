@@ -19,7 +19,7 @@
     if( isset( $_GET["provider"] ) && $_GET["provider"] ):
         try{
             // create an instance for Hybridauth with the configuration file path as parameter
-            $hybridauth = new Hybrid_Auth( $config );
+            $hybridauth = new HybridAuth_Auth( $config );
 
             // set selected provider name
             $provider = @ trim( strip_tags( $_GET["provider"] ) );
@@ -31,7 +31,7 @@
             $hybridauth->redirect( "profile.php?provider=$provider" );
         }
         catch( Exception $e ){
-            // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to
+            // In case we have errors 6 or 7, then we have to use HybridAuth_Provider_Adapter::logout() to
             // let hybridauth forget all about the user so we can try to authenticate again.
 
             // Display the recived error,
@@ -95,7 +95,7 @@
 <?php
     // try to get already authenticated provider list
     try{
-        $hybridauth = new Hybrid_Auth( $config );
+        $hybridauth = new HybridAuth_Auth( $config );
 
         $connected_adapters_list = $hybridauth->getConnectedProviders();
 

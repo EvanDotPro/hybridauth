@@ -8,7 +8,7 @@
 /**
  * HybridAuth storage manager
  */
-class Hybrid_Storage
+class HybridAuth_Storage
 {
     function __construct()
     {
@@ -19,7 +19,7 @@ class Hybrid_Storage
         }
 
         $this->config( "php_session_id", session_id() );
-        $this->config( "version", Hybrid_Auth::$version );
+        $this->config( "version", HybridAuth_Auth::$version );
     }
 
     public function config($key, $value=null)

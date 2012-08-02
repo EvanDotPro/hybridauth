@@ -6,13 +6,13 @@
 */
 
 /**
- * Hybrid_Providers_Google OpenID based
+ * HybridAuth_Providers_Google OpenID based
  *
  * Provided as a way to keep backward compatibility for Google OpenID based on HybridAuth <= 2.0.8
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Google.html
  */
-class Hybrid_Providers_Google extends Hybrid_Provider_Model_OpenID
+class HybridAuth_Providers_Google extends HybridAuth_Provider_Model_OpenID
 {
     var $openidIdentifier = "https://www.google.com/accounts/o8/id";
 
@@ -26,6 +26,6 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OpenID
         $this->user->profile->emailVerified = $this->user->profile->email;
 
         // restore the user profile
-        Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
+        HybridAuth_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
     }
 }

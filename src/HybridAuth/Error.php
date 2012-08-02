@@ -10,20 +10,20 @@
  *
  * HybridAuth errors are stored in Hybrid::storage() and not displayed directly to the end user
  */
-class Hybrid_Error
+class HybridAuth_Error
 {
     /**
     * store error in session
     */
     public static function setError( $message, $code = NULL, $trace = NULL, $previous = NULL )
     {
-        Hybrid_Logger::info( "Enter Hybrid_Error::setError( $message )" );
+        HybridAuth_Logger::info( "Enter HybridAuth_Error::setError( $message )" );
 
-        Hybrid_Auth::storage()->set( "hauth_session.error.status"  , 1         );
-        Hybrid_Auth::storage()->set( "hauth_session.error.message" , $message  );
-        Hybrid_Auth::storage()->set( "hauth_session.error.code"    , $code     );
-        Hybrid_Auth::storage()->set( "hauth_session.error.trace"   , $trace    );
-        Hybrid_Auth::storage()->set( "hauth_session.error.previous", $previous );
+        HybridAuth_Auth::storage()->set( "hauth_session.error.status"  , 1         );
+        HybridAuth_Auth::storage()->set( "hauth_session.error.message" , $message  );
+        HybridAuth_Auth::storage()->set( "hauth_session.error.code"    , $code     );
+        HybridAuth_Auth::storage()->set( "hauth_session.error.trace"   , $trace    );
+        HybridAuth_Auth::storage()->set( "hauth_session.error.previous", $previous );
     }
 
     /**
@@ -31,13 +31,13 @@ class Hybrid_Error
     */
     public static function clearError()
     {
-        Hybrid_Logger::info( "Enter Hybrid_Error::clearError()" );
+        HybridAuth_Logger::info( "Enter HybridAuth_Error::clearError()" );
 
-        Hybrid_Auth::storage()->delete( "hauth_session.error.status"   );
-        Hybrid_Auth::storage()->delete( "hauth_session.error.message"  );
-        Hybrid_Auth::storage()->delete( "hauth_session.error.code"     );
-        Hybrid_Auth::storage()->delete( "hauth_session.error.trace"    );
-        Hybrid_Auth::storage()->delete( "hauth_session.error.previous" );
+        HybridAuth_Auth::storage()->delete( "hauth_session.error.status"   );
+        HybridAuth_Auth::storage()->delete( "hauth_session.error.message"  );
+        HybridAuth_Auth::storage()->delete( "hauth_session.error.code"     );
+        HybridAuth_Auth::storage()->delete( "hauth_session.error.trace"    );
+        HybridAuth_Auth::storage()->delete( "hauth_session.error.previous" );
     }
 
     /**
@@ -47,7 +47,7 @@ class Hybrid_Error
     */
     public static function hasError()
     {
-        return (bool) Hybrid_Auth::storage()->get( "hauth_session.error.status" );
+        return (bool) HybridAuth_Auth::storage()->get( "hauth_session.error.status" );
     }
 
     /**
@@ -55,7 +55,7 @@ class Hybrid_Error
     */
     public static function getErrorMessage()
     {
-        return Hybrid_Auth::storage()->get( "hauth_session.error.message" );
+        return HybridAuth_Auth::storage()->get( "hauth_session.error.message" );
     }
 
     /**
@@ -63,7 +63,7 @@ class Hybrid_Error
     */
     public static function getErrorCode()
     {
-        return Hybrid_Auth::storage()->get( "hauth_session.error.code" );
+        return HybridAuth_Auth::storage()->get( "hauth_session.error.code" );
     }
 
     /**
@@ -71,7 +71,7 @@ class Hybrid_Error
     */
     public static function getErrorTrace()
     {
-        return Hybrid_Auth::storage()->get( "hauth_session.error.trace" );
+        return HybridAuth_Auth::storage()->get( "hauth_session.error.trace" );
     }
 
     /**
@@ -79,6 +79,6 @@ class Hybrid_Error
     */
     public static function getErrorPrevious()
     {
-        return Hybrid_Auth::storage()->get( "hauth_session.error.previous" );
+        return HybridAuth_Auth::storage()->get( "hauth_session.error.previous" );
     }
 }

@@ -19,7 +19,7 @@
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Plurk.html
  */
-class Hybrid_Providers_Plurk extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Plurk extends HybridAuth_Provider_Model_OAuth1
 {
     function initialize()
     {
@@ -101,7 +101,7 @@ class Hybrid_Providers_Plurk extends Hybrid_Provider_Model_OAuth1
         $contacts = array();
 
         foreach( $response as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = @ $item->uid;
             $uc->displayName  = @ $item->display_name;
@@ -179,7 +179,7 @@ class Hybrid_Providers_Plurk extends Hybrid_Provider_Model_OAuth1
         $plurks = $response->plurks;
 
         foreach ( $plurks as $item ) {
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
             $ua->id                 = @ $item->plurk_id;
             $ua->date               = @ strtotime( $item->posted );
             $ua->text               = @ $item->content_raw;

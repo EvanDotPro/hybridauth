@@ -6,13 +6,13 @@
 */
 
 /**
- * Hybrid_Providers_Facebook provider adapter based on OAuth2 protocol
+ * HybridAuth_Providers_Facebook provider adapter based on OAuth2 protocol
  *
- * Hybrid_Providers_Facebook use the Facebook PHP SDK created by Facebook
+ * HybridAuth_Providers_Facebook use the Facebook PHP SDK created by Facebook
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Facebook.html
  */
-class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
+class HybridAuth_Providers_Facebook extends HybridAuth_Provider_Model
 {
     // default permissions, and alot of them. You can change them from the configuration by setting the scope to what you want/need
     public $scope = "email, user_about_me, user_birthday, user_hometown, user_website, read_stream, offline_access, publish_stream, read_friendlists";
@@ -27,8 +27,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
         }
 
         if ( ! class_exists('FacebookApiException') ) {
-            require_once Hybrid_Auth::$config["path_libraries"] . "Facebook/base_facebook.php";
-            require_once Hybrid_Auth::$config["path_libraries"] . "Facebook/facebook.php";
+            require_once HybridAuth_Auth::$config["path_libraries"] . "Facebook/base_facebook.php";
+            require_once HybridAuth_Auth::$config["path_libraries"] . "Facebook/facebook.php";
         }
 
         $this->api = new Facebook( ARRAY( 'appId' => $this->config["keys"]["id"], 'secret' => $this->config["keys"]["secret"] ) );
@@ -67,7 +67,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
         $url = $this->api->getLoginUrl( $parameters );
 
         // redirect to facebook
-        Hybrid_Auth::redirect( $url );
+        HybridAuth_Auth::redirect( $url );
     }
 
     /**
@@ -164,7 +164,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
         $contacts = ARRAY();
 
         foreach( $response["data"] as $item ){
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier  = (array_key_exists("id",$item))?$item["id"]:"";
             $uc->displayName = (array_key_exists("name",$item))?$item["name"]:"";
@@ -229,7 +229,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
                 continue;
             }
 
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
 
             $ua->id                 = (array_key_exists("id",$item))?$item["id"]:"";
             $ua->date               = (array_key_exists("created_time",$item))?strtotime($item["created_time"]):"";

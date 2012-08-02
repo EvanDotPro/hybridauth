@@ -6,9 +6,9 @@
 */
 
 /**
- * The Hybrid_User class represents the current loggedin user
+ * The HybridAuth_User class represents the current loggedin user
  */
-class Hybrid_User
+class HybridAuth_User
 {
     /* The ID (name) of the connected provider */
     public $providerId = NULL;
@@ -26,6 +26,6 @@ class Hybrid_User
     {
         $this->timestamp = time();
 
-        $this->profile   = new Hybrid_User_Profile();
+        $this->profile   = new HybridAuth_User_Profile();
     }
 }

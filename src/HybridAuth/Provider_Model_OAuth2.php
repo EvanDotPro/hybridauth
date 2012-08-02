@@ -6,18 +6,18 @@
 */
 
 /**
- * To implement an OAuth 2 based service provider, Hybrid_Provider_Model_OAuth2
+ * To implement an OAuth 2 based service provider, HybridAuth_Provider_Model_OAuth2
  * can be used to save the hassle of the authentication flow.
  *
- * Each class that inherit from Hybrid_Provider_Model_OAuth2 have to implemenent
+ * Each class that inherit from HybridAuth_Provider_Model_OAuth2 have to implemenent
  * at least 2 methods:
- *   Hybrid_Providers_{provider_name}::initialize()     to setup the provider api end-points urls
- *   Hybrid_Providers_{provider_name}::getUserProfile() to grab the user profile
+ *   HybridAuth_Providers_{provider_name}::initialize()     to setup the provider api end-points urls
+ *   HybridAuth_Providers_{provider_name}::getUserProfile() to grab the user profile
  *
- * Hybrid_Provider_Model_OAuth2 use OAuth2Client v0.1 which can be found on
+ * HybridAuth_Provider_Model_OAuth2 use OAuth2Client v0.1 which can be found on
  * Hybrid/thirdparty/OAuth/OAuth2Client.php
  */
-class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
+class HybridAuth_Provider_Model_OAuth2 extends HybridAuth_Provider_Model
 {
     // default permissions
     public $scope = "";
@@ -63,7 +63,7 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
         }
 
         // include OAuth2 client
-        require_once Hybrid_Auth::$config["path_libraries"] . "OAuth/OAuth2Client.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "OAuth/OAuth2Client.php";
 
         // create a new OAuth2 client instance
         $this->api = new OAuth2Client( $this->config["keys"]["id"], $this->config["keys"]["secret"], $this->endpoint );
@@ -76,8 +76,8 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
             $this->api->access_token_expires_at = $this->token( "expires_at" );
         }
                 // Set curl proxy if exist
-                if( isset( Hybrid_Auth::$config["proxy"] ) ){
-                    $this->api->curl_proxy = Hybrid_Auth::$config["proxy"];
+                if( isset( HybridAuth_Auth::$config["proxy"] ) ){
+                    $this->api->curl_proxy = HybridAuth_Auth::$config["proxy"];
         }
     }
 
@@ -89,7 +89,7 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
     function loginBegin()
     {
         // redirect the user to the provider authentication url
-        Hybrid_Auth::redirect( $this->api->authorizeUrl( array( "scope" => $this->scope ) ) );
+        HybridAuth_Auth::redirect( $this->api->authorizeUrl( array( "scope" => $this->scope ) ) );
     }
 
     // --------------------------------------------------------------------

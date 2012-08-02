@@ -159,8 +159,8 @@ class OAuth1Client{
     */
     function request( $url, $method, $postfields = NULL, $auth_header = null )
     {
-        Hybrid_Logger::info( "Enter OAuth1Client::request( $method, $url )" );
-        Hybrid_Logger::debug( "OAuth1Client::request(). dump post fields: ", serialize( $postfields ) );
+        HybridAuth_Logger::info( "Enter OAuth1Client::request( $method, $url )" );
+        HybridAuth_Logger::debug( "OAuth1Client::request(). dump post fields: ", serialize( $postfields ) );
 
         $this->http_info = array();
         $ci = curl_init();
@@ -200,8 +200,8 @@ class OAuth1Client{
         curl_setopt($ci, CURLOPT_URL, $url);
         $response = curl_exec($ci);
 
-        Hybrid_Logger::debug( "OAuth1Client::request(). dump request info: ", serialize( curl_getinfo($ci) ) );
-        Hybrid_Logger::debug( "OAuth1Client::request(). dump request result: ", serialize( $response ) );
+        HybridAuth_Logger::debug( "OAuth1Client::request(). dump request info: ", serialize( curl_getinfo($ci) ) );
+        HybridAuth_Logger::debug( "OAuth1Client::request(). dump request result: ", serialize( $response ) );
 
         $this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
         $this->http_info = array_merge($this->http_info, curl_getinfo($ci));

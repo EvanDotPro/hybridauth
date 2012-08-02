@@ -7,7 +7,7 @@
 
     // try to get the user profile from an authenticated provider
     try{
-        $hybridauth = new Hybrid_Auth( $config );
+        $hybridauth = new HybridAuth_Auth( $config );
 
         // selected provider name
         $provider = @ trim( strip_tags( $_GET["provider"] ) );
@@ -25,7 +25,7 @@
         $user_data = $adapter->getUserProfile();
     }
     catch( Exception $e ){
-        // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to
+        // In case we have errors 6 or 7, then we have to use HybridAuth_Provider_Adapter::logout() to
         // let hybridauth forget all about the user so we can try to authenticate again.
 
         // Display the recived error,

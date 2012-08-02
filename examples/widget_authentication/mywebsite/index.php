@@ -10,7 +10,7 @@
     require_once( "../../../hybridauth/Hybrid/Auth.php" );
 
     try{
-        $hybridauth = new Hybrid_Auth( $config );
+        $hybridauth = new HybridAuth_Auth( $config );
     }
     catch( Exception $e ){
         echo "Ooophs, we got an error: " . $e->getMessage();

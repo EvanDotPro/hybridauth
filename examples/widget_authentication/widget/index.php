@@ -7,7 +7,7 @@
     require_once( "../../../hybridauth/Hybrid/Auth.php" );
 
     try{
-        $hybridauth = new Hybrid_Auth( $config );
+        $hybridauth = new HybridAuth_Auth( $config );
     }
     // if sometin bad happen
     catch( Exception $e ){

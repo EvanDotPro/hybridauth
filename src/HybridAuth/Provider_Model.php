@@ -6,20 +6,20 @@
 */
 
 /**
- * Hybrid_Provider_Model provide a common interface for supported IDps on HybridAuth.
+ * HybridAuth_Provider_Model provide a common interface for supported IDps on HybridAuth.
  *
  * Basically, each provider adapter has to define at least 4 methods:
- *   Hybrid_Providers_{provider_name}::initialize()
- *   Hybrid_Providers_{provider_name}::loginBegin()
- *   Hybrid_Providers_{provider_name}::loginFinish()
- *   Hybrid_Providers_{provider_name}::getUserProfile()
+ *   HybridAuth_Providers_{provider_name}::initialize()
+ *   HybridAuth_Providers_{provider_name}::loginBegin()
+ *   HybridAuth_Providers_{provider_name}::loginFinish()
+ *   HybridAuth_Providers_{provider_name}::getUserProfile()
  *
  * HybridAuth also come with three others models
- *   Class Hybrid_Provider_Model_OpenID for providers that uses the OpenID 1 and 2 protocol.
- *   Class Hybrid_Provider_Model_OAuth1 for providers that uses the OAuth 1 protocol.
- *   Class Hybrid_Provider_Model_OAuth2 for providers that uses the OAuth 2 protocol.
+ *   Class HybridAuth_Provider_Model_OpenID for providers that uses the OpenID 1 and 2 protocol.
+ *   Class HybridAuth_Provider_Model_OAuth1 for providers that uses the OAuth 1 protocol.
+ *   Class HybridAuth_Provider_Model_OAuth2 for providers that uses the OAuth 2 protocol.
  */
-abstract class Hybrid_Provider_Model
+abstract class HybridAuth_Provider_Model
 {
     /* IDp ID (or unique name) */
     public $providerId = NULL;
@@ -33,7 +33,7 @@ abstract class Hybrid_Provider_Model
     /* Endpoint URL for that provider */
     public $endpoint   = NULL;
 
-    /* Hybrid_User obj, represents the current loggedin user */
+    /* HybridAuth_User obj, represents the current loggedin user */
     public $user       = NULL;
 
     /* the provider api client (optional) */
@@ -46,7 +46,7 @@ abstract class Hybrid_Provider_Model
     {
         # init the IDp adapter parameters, get them from the cache if possible
         if( ! $params ){
-            $this->params = Hybrid_Auth::storage()->get( "hauth_session.$providerId.id_provider_params" );
+            $this->params = HybridAuth_Auth::storage()->get( "hauth_session.$providerId.id_provider_params" );
         }
         else{
             $this->params = $params;
@@ -56,19 +56,19 @@ abstract class Hybrid_Provider_Model
         $this->providerId = $providerId;
 
         // set HybridAuth endpoint for this provider
-        $this->endpoint = Hybrid_Auth::storage()->get( "hauth_session.$providerId.hauth_endpoint" );
+        $this->endpoint = HybridAuth_Auth::storage()->get( "hauth_session.$providerId.hauth_endpoint" );
 
         // idp config
         $this->config = $config;
 
         // new user instance
-        $this->user = new Hybrid_User();
+        $this->user = new HybridAuth_User();
         $this->user->providerId = $providerId;
 
         // initialize the current provider adapter
         $this->initialize();
 
-        Hybrid_Logger::debug( "Hybrid_Provider_Model::__construct( $providerId ) initialized. dump current adapter instance: ", serialize( $this ) );
+        HybridAuth_Logger::debug( "HybridAuth_Provider_Model::__construct( $providerId ) initialized. dump current adapter instance: ", serialize( $this ) );
     }
 
     // --------------------------------------------------------------------
@@ -101,11 +101,11 @@ abstract class Hybrid_Provider_Model
     // --------------------------------------------------------------------
 
        /**
-    * generic logout, just erase current provider adapter stored data to let Hybrid_Auth all forget about it
+    * generic logout, just erase current provider adapter stored data to let HybridAuth_Auth all forget about it
     */
     function logout()
     {
-        Hybrid_Logger::info( "Enter [{$this->providerId}]::logout()" );
+        HybridAuth_Logger::info( "Enter [{$this->providerId}]::logout()" );
 
         $this->clearTokens();
 
@@ -119,7 +119,7 @@ abstract class Hybrid_Provider_Model
     */
     function getUserProfile()
     {
-        Hybrid_Logger::error( "HybridAuth do not provide users contats list for {$this->providerId} yet." );
+        HybridAuth_Logger::error( "HybridAuth do not provide users contats list for {$this->providerId} yet." );
 
         throw new Exception( "Provider does not support this feature.", 8 );
     }
@@ -131,7 +131,7 @@ abstract class Hybrid_Provider_Model
     */
     function getUserContacts()
     {
-        Hybrid_Logger::error( "HybridAuth do not provide users contats list for {$this->providerId} yet." );
+        HybridAuth_Logger::error( "HybridAuth do not provide users contats list for {$this->providerId} yet." );
 
         throw new Exception( "Provider does not support this feature.", 8 );
     }
@@ -143,7 +143,7 @@ abstract class Hybrid_Provider_Model
     */
     function getUserActivity( $stream )
     {
-        Hybrid_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." );
+        HybridAuth_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." );
 
         throw new Exception( "Provider does not support this feature.", 8 );
     }
@@ -155,7 +155,7 @@ abstract class Hybrid_Provider_Model
     */
     function setUserStatus( $status )
     {
-        Hybrid_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." );
+        HybridAuth_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." );
 
         throw new Exception( "Provider does not support this feature.", 8 );
     }
@@ -167,7 +167,7 @@ abstract class Hybrid_Provider_Model
     */
     public function isUserConnected()
     {
-        return (bool) Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.is_logged_in" );
+        return (bool) HybridAuth_Auth::storage()->get( "hauth_session.{$this->providerId}.is_logged_in" );
     }
 
     // --------------------------------------------------------------------
@@ -177,9 +177,9 @@ abstract class Hybrid_Provider_Model
     */
     public function setUserConnected()
     {
-        Hybrid_Logger::info( "Enter [{$this->providerId}]::setUserConnected()" );
+        HybridAuth_Logger::info( "Enter [{$this->providerId}]::setUserConnected()" );
 
-        Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 1 );
+        HybridAuth_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 1 );
     }
 
     // --------------------------------------------------------------------
@@ -189,9 +189,9 @@ abstract class Hybrid_Provider_Model
     */
     public function setUserUnconnected()
     {
-        Hybrid_Logger::info( "Enter [{$this->providerId}]::setUserUnconnected()" );
+        HybridAuth_Logger::info( "Enter [{$this->providerId}]::setUserUnconnected()" );
 
-        Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 0 );
+        HybridAuth_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 0 );
     }
 
     // --------------------------------------------------------------------
@@ -202,10 +202,10 @@ abstract class Hybrid_Provider_Model
     public function token( $token, $value = NULL )
     {
         if( $value === NULL ){
-            return Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.token.$token" );
+            return HybridAuth_Auth::storage()->get( "hauth_session.{$this->providerId}.token.$token" );
         }
         else{
-            Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.token.$token", $value );
+            HybridAuth_Auth::storage()->set( "hauth_session.{$this->providerId}.token.$token", $value );
         }
     }
 
@@ -216,7 +216,7 @@ abstract class Hybrid_Provider_Model
     */
     public function deleteToken( $token )
     {
-        Hybrid_Auth::storage()->delete( "hauth_session.{$this->providerId}.token.$token" );
+        HybridAuth_Auth::storage()->delete( "hauth_session.{$this->providerId}.token.$token" );
     }
 
     // --------------------------------------------------------------------
@@ -226,6 +226,6 @@ abstract class Hybrid_Provider_Model
     */
     public function clearTokens()
     {
-        Hybrid_Auth::storage()->deleteMatch( "hauth_session.{$this->providerId}." );
+        HybridAuth_Auth::storage()->deleteMatch( "hauth_session.{$this->providerId}." );
     }
 }

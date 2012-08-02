@@ -15,9 +15,9 @@
  */
 
 /**
- * Hybrid_Providers_Live - Windows Live provider adapter based on OAuth2 protocol
+ * HybridAuth_Providers_Live - Windows Live provider adapter based on OAuth2 protocol
  */
-class Hybrid_Providers_Live extends Hybrid_Provider_Model_OAuth2
+class HybridAuth_Providers_Live extends HybridAuth_Provider_Model_OAuth2
 {
     // default permissions
     public $scope = "wl.basic wl.emails wl.signin wl.share wl.birthday";
@@ -93,7 +93,7 @@ class Hybrid_Providers_Live extends Hybrid_Provider_Model_OAuth2
         $contacts = array();
 
         foreach( $response->data as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = (property_exists($item,'id'))?$item->id:"";
             $uc->displayName  = (property_exists($item,'name'))?$item->name:"";

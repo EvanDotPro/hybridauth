@@ -8,7 +8,7 @@
     // start login with facebook?
     if( isset( $_GET["login"] ) ){
         try{
-            $hybridauth = new Hybrid_Auth( $config );
+            $hybridauth = new HybridAuth_Auth( $config );
 
             $adapter = $hybridauth->authenticate( "facebook" );
 

@@ -7,7 +7,7 @@ class authentications extends controller {
 
         try{
         // create an instance for Hybridauth with the configuration file path as parameter
-            $hybridauth = new Hybrid_Auth( $hybridauth_config );
+            $hybridauth = new HybridAuth_Auth( $hybridauth_config );
 
         // try to authenticate the selected $provider
             $adapter = $hybridauth->authenticate( $provider );

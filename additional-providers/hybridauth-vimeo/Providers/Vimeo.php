@@ -6,9 +6,9 @@
 */
 
 /**
- * Hybrid_Providers_Vimeo class, wrapper for Vimeo
+ * HybridAuth_Providers_Vimeo class, wrapper for Vimeo
  */
-class Hybrid_Providers_Vimeo extends Hybrid_Provider_Model
+class HybridAuth_Providers_Vimeo extends HybridAuth_Provider_Model
 {
    /**
     * IDp wrappers initializer
@@ -20,7 +20,7 @@ class Hybrid_Providers_Vimeo extends Hybrid_Provider_Model
             throw new Exception( "Your application key and secret are required in order to connect to {$this->providerId}.", 4 );
         }
 
-        require_once Hybrid_Auth::$config["path_libraries"] . "Vimeo/Vimeo.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "Vimeo/Vimeo.php";
 
         if( $this->token( "access_token" ) && $this->token( "access_token_secret" ) )
         {
@@ -51,7 +51,7 @@ class Hybrid_Providers_Vimeo extends Hybrid_Provider_Model
         $this->token( "request_token_secret" , $tokz['oauth_token_secret'] );
 
         # Build authorize link & redirect user to vimeo authorisation web page
-        Hybrid_Auth::redirect( $this->api->getAuthorizeUrl( $tokz['oauth_token'], 'write' ) );
+        HybridAuth_Auth::redirect( $this->api->getAuthorizeUrl( $tokz['oauth_token'], 'write' ) );
     }
 
    /**

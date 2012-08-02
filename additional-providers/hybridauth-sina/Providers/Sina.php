@@ -19,7 +19,7 @@
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Sina.html
  */
-class Hybrid_Providers_Sina extends Hybrid_Provider_Model
+class HybridAuth_Providers_Sina extends HybridAuth_Provider_Model
 {
     public $user_id;
 
@@ -33,7 +33,7 @@ class Hybrid_Providers_Sina extends Hybrid_Provider_Model
             throw new Exception( 'Your application key and secret are required in order to connect to ' . $this->providerId . '.', 4 );
         }
 
-        require_once Hybrid_Auth::$config['path_libraries'] . 'Sina/saetv2.ex.class.php';
+        require_once HybridAuth_Auth::$config['path_libraries'] . 'Sina/saetv2.ex.class.php';
 
         if ( $this->token( 'access_token' ) ) {
             $this->api = new SaeTClientV2 (
@@ -54,7 +54,7 @@ class Hybrid_Providers_Sina extends Hybrid_Provider_Model
     */
     function loginBegin()
     {
-        Hybrid_Auth::redirect( $this->api->getAuthorizeURL( $this->endpoint ) );
+        HybridAuth_Auth::redirect( $this->api->getAuthorizeURL( $this->endpoint ) );
     }
 
    /**
@@ -141,7 +141,7 @@ class Hybrid_Providers_Sina extends Hybrid_Provider_Model
         $contacts = array();
 
         foreach( $response['users'] as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = @ $item['id'];
             $uc->displayName  = @ $item['name'];
@@ -201,7 +201,7 @@ class Hybrid_Providers_Sina extends Hybrid_Provider_Model
 
         foreach ( $response['statuses']  as $item )
         {
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
             $ua->id                 = @ $item['id'];
             $ua->date               = @ strtotime($item['created_at']);
             $ua->text               = @ $item['text'];

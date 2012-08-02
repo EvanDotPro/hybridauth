@@ -6,16 +6,16 @@
 */
 
 /**
- * To implement an OpenID based service provider, Hybrid_Provider_Model_OpenID
+ * To implement an OpenID based service provider, HybridAuth_Provider_Model_OpenID
  * can be used to save the hassle of the authentication flow.
  *
- * Each class that inherit from Hybrid_Provider_Model_OAuth2 have only to define
+ * Each class that inherit from HybridAuth_Provider_Model_OAuth2 have only to define
  * the provider identifier : <code>public $openidIdentifier = ""; </code>
  *
- * Hybrid_Provider_Model_OpenID use LightOpenID lib which can be found on
+ * HybridAuth_Provider_Model_OpenID use LightOpenID lib which can be found on
  * Hybrid/thirdparty/OpenID/LightOpenID.php
  */
-class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
+class HybridAuth_Provider_Model_OpenID extends HybridAuth_Provider_Model
 {
     /* Openid provider identifier */
     public $openidIdentifier = "";
@@ -32,9 +32,9 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
         }
 
         // include LightOpenID lib
-        require_once Hybrid_Auth::$config["path_libraries"] . "OpenID/LightOpenID.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "OpenID/LightOpenID.php";
 
-        $this->api = new LightOpenID( parse_url( Hybrid_Auth::$config["base_url"], PHP_URL_HOST), Hybrid_Auth::$config["proxy"] );
+        $this->api = new LightOpenID( parse_url( HybridAuth_Auth::$config["base_url"], PHP_URL_HOST), HybridAuth_Auth::$config["proxy"] );
     }
 
     // --------------------------------------------------------------------
@@ -74,7 +74,7 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
         );
 
         # redirect the user to the provider authentication url
-        Hybrid_Auth::redirect( $this->api->authUrl() );
+        HybridAuth_Auth::redirect( $this->api->authUrl() );
     }
 
     // --------------------------------------------------------------------
@@ -146,7 +146,7 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
         $this->setUserConnected();
 
         // with openid providers we get the user profile only once, so store it
-        Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
+        HybridAuth_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
     }
 
     // --------------------------------------------------------------------
@@ -157,7 +157,7 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
     function getUserProfile()
     {
         // try to get the user profile from stored data
-        $this->user = Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.user" ) ;
+        $this->user = HybridAuth_Auth::storage()->get( "hauth_session.{$this->providerId}.user" ) ;
 
         // if not found
         if ( ! is_object( $this->user ) ){

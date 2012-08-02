@@ -6,9 +6,9 @@
 */
 
 /**
-* Hybrid_Providers_Goodreads
+* HybridAuth_Providers_Goodreads
 */
-class Hybrid_Providers_Goodreads extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Goodreads extends HybridAuth_Provider_Model_OAuth1
 {
        /**
     * IDp wrappers initializer

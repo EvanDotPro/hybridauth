@@ -6,18 +6,18 @@
 */
 
 /**
- * To implement an OAuth 1 based service provider, Hybrid_Provider_Model_OAuth1
+ * To implement an OAuth 1 based service provider, HybridAuth_Provider_Model_OAuth1
  * can be used to save the hassle of the authentication flow.
  *
- * Each class that inherit from Hybrid_Provider_Model_OAuth1 have to implemenent
+ * Each class that inherit from HybridAuth_Provider_Model_OAuth1 have to implemenent
  * at least 2 methods:
- *   Hybrid_Providers_{provider_name}::initialize()     to setup the provider api end-points urls
- *   Hybrid_Providers_{provider_name}::getUserProfile() to grab the user profile
+ *   HybridAuth_Providers_{provider_name}::initialize()     to setup the provider api end-points urls
+ *   HybridAuth_Providers_{provider_name}::getUserProfile() to grab the user profile
  *
- * Hybrid_Provider_Model_OAuth1 use OAuth1Client v0.1 which can be found on
+ * HybridAuth_Provider_Model_OAuth1 use OAuth1Client v0.1 which can be found on
  * Hybrid/thirdparty/OAuth/OAuth1Client.php
  */
-class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
+class HybridAuth_Provider_Model_OAuth1 extends HybridAuth_Provider_Model
 {
     public $request_tokens_raw = null; // request_tokens as recived from provider
     public $access_tokens_raw  = null; // access_tokens as recived from provider
@@ -59,8 +59,8 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
         }
 
         // 2 - include OAuth lib and client
-        require_once Hybrid_Auth::$config["path_libraries"] . "OAuth/OAuth.php";
-        require_once Hybrid_Auth::$config["path_libraries"] . "OAuth/OAuth1Client.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "OAuth/OAuth.php";
+        require_once HybridAuth_Auth::$config["path_libraries"] . "OAuth/OAuth1Client.php";
 
         // 3.1 - setup access_token if any stored
         if( $this->token( "access_token" ) ){
@@ -83,8 +83,8 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
             $this->api = new OAuth1Client( $this->config["keys"]["key"], $this->config["keys"]["secret"] );
         }
                 // Set curl proxy if exist
-                if( isset( Hybrid_Auth::$config["proxy"] ) ){
-                    $this->api->curl_proxy = Hybrid_Auth::$config["proxy"];
+                if( isset( HybridAuth_Auth::$config["proxy"] ) ){
+                    $this->api->curl_proxy = HybridAuth_Auth::$config["proxy"];
         }
     }
 
@@ -113,7 +113,7 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
         $this->token( "request_token_secret", $tokens["oauth_token_secret"] );
 
         # redirect the user to the provider authentication url
-        Hybrid_Auth::redirect( $this->api->authorizeUrl( $tokens ) );
+        HybridAuth_Auth::redirect( $this->api->authorizeUrl( $tokens ) );
     }
 
     // --------------------------------------------------------------------

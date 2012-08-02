@@ -6,12 +6,12 @@
 */
 
 /**
- * Hybrid_Providers_Vkontakte provider adapter based on OAuth2 protocol
+ * HybridAuth_Providers_Vkontakte provider adapter based on OAuth2 protocol
  *
  * added by guiltar | https://github.com/guiltar
  */
 
-class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
+class HybridAuth_Providers_Vkontakte extends HybridAuth_Provider_Model_OAuth2
 {
     // default permissions
     public $scope = "";
@@ -60,7 +60,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
         $this->token( "expires_at"   , $this->api->access_token_expires_at );
 
         // store user id. it is required for api access to Vkontakte
-        Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user_id", $response->user_id );
+        HybridAuth_Auth::storage()->set( "hauth_session.{$this->providerId}.user_id", $response->user_id );
 
         // set user connected locally
         $this->setUserConnected();
@@ -75,7 +75,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
         $this->refreshToken();
 
         // Vkontakte requires user id, not just token for api access
-        $params['uid'] = Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.user_id" );
+        $params['uid'] = HybridAuth_Auth::storage()->get( "hauth_session.{$this->providerId}.user_id" );
         $params['fields'] = 'first_name,last_name,nickname,screen_name,sex,bdate,timezone,photo_rec,photo_big';
         // ask vkontakte api for user infos
         $response = $this->api->api( "https://api.vk.com/method/getProfiles" , 'GET', $params);

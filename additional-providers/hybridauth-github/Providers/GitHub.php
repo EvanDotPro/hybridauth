@@ -6,9 +6,9 @@
 */
 
 /**
- * Hybrid_Providers_GitHub
+ * HybridAuth_Providers_GitHub
  */
-class Hybrid_Providers_GitHub extends Hybrid_Provider_Model_OAuth2
+class HybridAuth_Providers_GitHub extends HybridAuth_Provider_Model_OAuth2
 {
     // default permissions
     // (no scope) => public read-only access (includes public user profile info, public repo info, and gists).

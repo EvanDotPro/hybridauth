@@ -15,9 +15,9 @@
  */
 
 /**
- * Hybrid_Providers_Yahoo - Yahoo provider adapter based on OAuth1 protocol
+ * HybridAuth_Providers_Yahoo - Yahoo provider adapter based on OAuth1 protocol
  */
-class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_Yahoo extends HybridAuth_Provider_Model_OAuth1
 {
     function initialize()
     {
@@ -109,7 +109,7 @@ class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OAuth1
         $contacts = array();
 
         foreach( $response->contacts->contact as $item ) {
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = $this->selectGUID( $item );
             $uc->email        = $this->selectEmail( $item->fields );
@@ -143,7 +143,7 @@ class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OAuth1
         $activities = array();
 
         foreach( $response->updates as $item ){
-            $ua = new Hybrid_User_Activity();
+            $ua = new HybridAuth_User_Activity();
 
             $ua->id = (property_exists($item,'collectionID'))?$item->collectionID:"";
             $ua->date = (property_exists($item,'lastUpdated'))?$item->lastUpdated:"";

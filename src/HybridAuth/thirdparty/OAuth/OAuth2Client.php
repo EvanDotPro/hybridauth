@@ -188,8 +188,8 @@ class OAuth2Client
 
     private function request( $url, $params=false, $type="GET" )
     {
-        Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-        Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
+        HybridAuth_Logger::info( "Enter OAuth2Client::request( $url )" );
+        HybridAuth_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
 
         if( $type == "GET" ){
             $url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query( $params );
@@ -213,8 +213,8 @@ class OAuth2Client
             if($params) curl_setopt( $ch, CURLOPT_POSTFIELDS, $params );
         }
         $response = curl_exec($ch);
-        Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
-        Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
+        HybridAuth_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
+        HybridAuth_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
 
         $this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->http_info = array_merge($this->http_info, curl_getinfo($ch));

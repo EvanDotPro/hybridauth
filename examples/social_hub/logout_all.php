@@ -4,7 +4,7 @@
     require_once( "../../hybridauth/Hybrid/Auth.php" );
 
     try{
-        $hybridauth = new Hybrid_Auth( $config );
+        $hybridauth = new HybridAuth_Auth( $config );
 
         // logout the user from $provider
         $hybridauth->logoutAllProviders();

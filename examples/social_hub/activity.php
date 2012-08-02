@@ -4,7 +4,7 @@
         require_once( "../../hybridauth/Hybrid/Auth.php" );
 
     // initialise hybridauth
-    $hybridauth = new Hybrid_Auth( $config );
+    $hybridauth = new HybridAuth_Auth( $config );
 
     // selected provider name
     $provider = @ trim( strip_tags( $_GET["provider"] ) );

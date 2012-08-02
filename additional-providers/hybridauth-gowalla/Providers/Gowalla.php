@@ -6,11 +6,11 @@
 */
 
 /**
- * Hybrid_Providers_Gowalla provider adapter based on OAuth2 protocol
+ * HybridAuth_Providers_Gowalla provider adapter based on OAuth2 protocol
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Gowalla.html
  */
-class Hybrid_Providers_Gowalla extends Hybrid_Provider_Model_OAuth2
+class HybridAuth_Providers_Gowalla extends HybridAuth_Provider_Model_OAuth2
 {
     /**
     * IDp wrappers initializer

@@ -7,7 +7,7 @@
 
     try{
         // hybridauth EP
-        $hybridauth = new Hybrid_Auth( $config );
+        $hybridauth = new HybridAuth_Auth( $config );
 
         // automatically try to login with Twitter
         $twitter = $hybridauth->authenticate( "Twitter" );
@@ -45,7 +45,7 @@
         $twitter->logout();
     }
     catch( Exception $e ){
-        // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to
+        // In case we have errors 6 or 7, then we have to use HybridAuth_Provider_Adapter::logout() to
         // let hybridauth forget all about the user so we can try to authenticate again.
 
         // Display the recived error,

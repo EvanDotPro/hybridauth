@@ -6,11 +6,11 @@
 */
 
 /**
- * Hybrid_Providers_MySpace provider adapter based on OAuth1 protocol
+ * HybridAuth_Providers_MySpace provider adapter based on OAuth1 protocol
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_MySpace.html
  */
-class Hybrid_Providers_MySpace extends Hybrid_Provider_Model_OAuth1
+class HybridAuth_Providers_MySpace extends HybridAuth_Provider_Model_OAuth1
 {
     /**
     * IDp wrappers initializer
@@ -84,7 +84,7 @@ class Hybrid_Providers_MySpace extends Hybrid_Provider_Model_OAuth1
         $contacts = ARRAY();
 
         foreach( $response->Friends as $item ){
-            $uc = new Hybrid_User_Contact();
+            $uc = new HybridAuth_User_Contact();
 
             $uc->identifier   = $item->userId;
             $uc->displayName  = $item->name;
@@ -144,7 +144,7 @@ class Hybrid_Providers_MySpace extends Hybrid_Provider_Model_OAuth1
         }
         else{
             foreach( $response->FriendsStatus as $item ){
-                $ua = new Hybrid_User_Activity();
+                $ua = new HybridAuth_User_Activity();
 
                 $ua->id                 = $item->statusId;
                 $ua->date               = NULL; // to find out!!

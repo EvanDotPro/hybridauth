@@ -6,13 +6,13 @@
 */
 
 /**
- * Hybrid_User_Contact
+ * HybridAuth_User_Contact
  *
  * used to provider the connected user contacts list on a standardized structure across supported social apis.
  *
  * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Contacts.html
  */
-class Hybrid_User_Contact
+class HybridAuth_User_Contact
 {
     /* The Unique contact user ID */
     public $identifier = NULL;
