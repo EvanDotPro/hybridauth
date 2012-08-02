@@ -49,10 +49,10 @@ class FacebookApiException extends Exception
     if (isset($result['error_description'])) {
       // OAuth 2.0 Draft 10 style
       $msg = $result['error_description'];
-    } else if (isset($result['error']) && is_array($result['error'])) {
+    } elseif (isset($result['error']) && is_array($result['error'])) {
       // OAuth 2.0 Draft 00 style
       $msg = $result['error']['message'];
-    } else if (isset($result['error_msg'])) {
+    } elseif (isset($result['error_msg'])) {
       // Rest server style
       $msg = $result['error_msg'];
     } else {
@@ -83,7 +83,7 @@ class FacebookApiException extends Exception
       if (is_string($error)) {
         // OAuth 2.0 Draft 10 style
         return $error;
-      } else if (is_array($error)) {
+      } elseif (is_array($error)) {
         // OAuth 2.0 Draft 00 style
         if (isset($error['type'])) {
           return $error['type'];
@@ -431,7 +431,7 @@ abstract class BaseFacebook
       if (isset($_REQUEST['signed_request'])) {
         $this->signedRequest = $this->parseSignedRequest(
           $_REQUEST['signed_request']);
-      } else if (isset($_COOKIE[$this->getSignedRequestCookieName()])) {
+      } elseif (isset($_COOKIE[$this->getSignedRequestCookieName()])) {
         $this->signedRequest = $this->parseSignedRequest(
           $_COOKIE[$this->getSignedRequestCookieName()]);
       }
@@ -999,7 +999,7 @@ abstract class BaseFacebook
     $name = 'api';
     if (isset($READ_ONLY_CALLS[strtolower($method)])) {
       $name = 'api_read';
-    } else if (strtolower($method) == 'video.upload') {
+    } elseif (strtolower($method) == 'video.upload') {
       $name = 'api_video';
     }
     return self::getUrl($name, 'restserver.php');
@@ -1268,49 +1268,49 @@ abstract class BaseFacebook
    * @return void
    */
   abstract protected function clearAllPersistentData();
-  
 
-	/**
-	* Extending access_token expiration time through fb new endpoint
-	*  returns an new access token which expires in 60 days
-	*
-	* http://developers.facebook.com/roadmap/offline-access-removal/#extend_token
-	* http://stackoverflow.com/a/9035036/1106794
-	*/
-	function extendedAccessToken( $old_access_token )
-	{
-		// Make a OAuth Request.
-		try {
-			$params = array(
-				'client_id'         => $this->getAppId(),
-				'client_secret'     => $this->getAppSecret(),
-				'grant_type'        => 'fb_exchange_token',
-				'fb_exchange_token' => $old_access_token,
-			);
 
-			$response = $this->_oauthRequest( $this->getUrl( 'graph', '/oauth/access_token' ), $params );
-			
-			// print_r( array( $this->getUrl( 'graph', '/oauth/access_token' ), $params, $response ) );
-		}
-		catch ( FacebookApiException $e ) {
-			// most likely that user very recently revoked authorization.
-			// In any event, we don't have an access token, so say so.
-			return false;
-		}
+    /**
+    * Extending access_token expiration time through fb new endpoint
+    *  returns an new access token which expires in 60 days
+    *
+    * http://developers.facebook.com/roadmap/offline-access-removal/#extend_token
+    * http://stackoverflow.com/a/9035036/1106794
+    */
+    function extendedAccessToken( $old_access_token )
+    {
+        // Make a OAuth Request.
+        try {
+            $params = array(
+                'client_id'         => $this->getAppId(),
+                'client_secret'     => $this->getAppSecret(),
+                'grant_type'        => 'fb_exchange_token',
+                'fb_exchange_token' => $old_access_token,
+            );
 
-		if (empty($response)) {
-			return false;
-		}
+            $response = $this->_oauthRequest( $this->getUrl( 'graph', '/oauth/access_token' ), $params );
 
-		$response_params = array();
+            // print_r( array( $this->getUrl( 'graph', '/oauth/access_token' ), $params, $response ) );
+        }
+        catch ( FacebookApiException $e ) {
+            // most likely that user very recently revoked authorization.
+            // In any event, we don't have an access token, so say so.
+            return false;
+        }
 
-		parse_str($response, $response_params);
+        if (empty($response)) {
+            return false;
+        }
 
-		if (!isset($response_params['access_token'])) {
-			return false;
-		}
+        $response_params = array();
 
-		return $response_params['access_token'];
-	}
+        parse_str($response, $response_params);
+
+        if (!isset($response_params['access_token'])) {
+            return false;
+        }
+
+        return $response_params['access_token'];
+    }
 
 }

@@ -1,3 +1,3 @@
 <?php
-	// peace out
-	header( "Location: login.php" );
+    // peace out
+    header( "Location: login.php" );

@@ -1,159 +1,159 @@
 <?php
-class users extends controller { 
-	function index()
-	{
-		if( isset( $_SESSION["user"] ) ){
-			$this->redirect( "users/profile" );
-		}
-		else{
-			$this->redirect( "users/login" );
-		}
-	}
+class users extends controller {
+    function index()
+    {
+        if( isset( $_SESSION["user"] ) ){
+            $this->redirect( "users/profile" );
+        }
+        else{
+            $this->redirect( "users/login" );
+        }
+    }
 
-	function login()
-	{
-		$data = array();
+    function login()
+    {
+        $data = array();
 
-		// login form submitted?
-		if( count( $_POST ) ){
-			// load user and authentication models
-			$user = $this->loadModel( "user" );
+        // login form submitted?
+        if( count( $_POST ) ){
+            // load user and authentication models
+            $user = $this->loadModel( "user" );
 
-			// get the user data from database 
-			$user_data = $user->find_by_email_and_password( $_POST["email"], $_POST["password"] );
+            // get the user data from database
+            $user_data = $user->find_by_email_and_password( $_POST["email"], $_POST["password"] );
 
-			// user found?
-			if( $user_data ){
-				$_SESSION["user"] = $user_data["id"]; 
+            // user found?
+            if( $user_data ){
+                $_SESSION["user"] = $user_data["id"];
 
-				$this->redirect( "users/profile" );
-			}
+                $this->redirect( "users/profile" );
+            }
 
-			$data["error_message"] = '<b style="color:red">Bad Email or password! Try again.</b>';
-		}
+            $data["error_message"] = '<b style="color:red">Bad Email or password! Try again.</b>';
+        }
 
-		// load login view
-		$this->loadView( "users/login", $data );
-	}
+        // load login view
+        $this->loadView( "users/login", $data );
+    }
 
-	function logout()
-	{
-		// every thing is within php sessions, just destory it
-		$_SESSION = array(); 
-		session_destroy();
+    function logout()
+    {
+        // every thing is within php sessions, just destory it
+        $_SESSION = array();
+        session_destroy();
 
-		// go back home 
-		$this->redirect( "users/login" );
-	}
+        // go back home
+        $this->redirect( "users/login" );
+    }
 
-	function register()
-	{
-		$data = array();
+    function register()
+    {
+        $data = array();
 
-		// load user model 
-		$user = $this->loadModel( "user" ); 
+        // load user model
+        $user = $this->loadModel( "user" );
 
-		// registration form submitted?
-		if( count( $_POST ) ){
-			$email      = $_POST["email"];
-			$password   = $_POST["password"];
-			$first_name = $_POST["first_name"];
-			$last_name  = $_POST["last_name"];
+        // registration form submitted?
+        if( count( $_POST ) ){
+            $email      = $_POST["email"];
+            $password   = $_POST["password"];
+            $first_name = $_POST["first_name"];
+            $last_name  = $_POST["last_name"];
 
-			if( ! $email || ! $password ){
-				$data["error_message"] = '<br /><b style="color:red">Your email and a password are required!</b>';
-			}
-			else{
-				// check if email is in use?
-				$user_info = $user->find_by_email( $email );
+            if( ! $email || ! $password ){
+                $data["error_message"] = '<br /><b style="color:red">Your email and a password are required!</b>';
+            }
+            else{
+                // check if email is in use?
+                $user_info = $user->find_by_email( $email );
 
-				// if email used on users table, we display an error
-				if( $user_info ){
-					$data["error_message"] = '<br /><b style="color:red">Email alredy in use with another account!</b>';
-				}
-				else{
-					// create new user
-					$new_user_id = $user->create( $email, $password, $first_name, $last_name );
+                // if email used on users table, we display an error
+                if( $user_info ){
+                    $data["error_message"] = '<br /><b style="color:red">Email alredy in use with another account!</b>';
+                }
+                else{
+                    // create new user
+                    $new_user_id = $user->create( $email, $password, $first_name, $last_name );
 
-					// set user connected
-					$_SESSION["user"] = $new_user_id; 
- 
-					$this->redirect( "users/profile" );
-				}
-			}
-		}
+                    // set user connected
+                    $_SESSION["user"] = $new_user_id;
 
-		$this->loadView( "users/register", $data );
-	}
+                    $this->redirect( "users/profile" );
+                }
+            }
+        }
 
-	function complete_registration()
-	{
-		$data = array();
+        $this->loadView( "users/register", $data );
+    }
 
-		// load user model 
-		$user = $this->loadModel( "user" ); 
+    function complete_registration()
+    {
+        $data = array();
 
-		// complete registration form submitted?
-		if( count( $_POST ) ){
-			$email      = $_POST["email"];
-			$password   = $_POST["password"];
-			$first_name = $_POST["first_name"];
-			$last_name  = $_POST["last_name"];
+        // load user model
+        $user = $this->loadModel( "user" );
 
-			if( ! $email || ! $password ){
-				$data["error_message"] = '<br /><b style="color:red">Your email and a password are really important for us!</b>';
-			}
-			else{
-				// check if email is in use?
-				$user_info = $user->find_by_email( $email ); 
+        // complete registration form submitted?
+        if( count( $_POST ) ){
+            $email      = $_POST["email"];
+            $password   = $_POST["password"];
+            $first_name = $_POST["first_name"];
+            $last_name  = $_POST["last_name"];
 
-				// if email used on users table, we display an error
-				if( $user_info && $user_info["id"] != $_SESSION["user"] ){
-					$data["error_message"] = '<br /><b style="color:red">Email already in use with another account!</b>';
-				}
-				else{
-					// update user profile
-					$user->update( $_SESSION["user"], $email, $password, $first_name, $last_name );
+            if( ! $email || ! $password ){
+                $data["error_message"] = '<br /><b style="color:red">Your email and a password are really important for us!</b>';
+            }
+            else{
+                // check if email is in use?
+                $user_info = $user->find_by_email( $email );
 
-					// here we go
-					$this->redirect( "users/profile" );
-				}
-			}
-		}
+                // if email used on users table, we display an error
+                if( $user_info && $user_info["id"] != $_SESSION["user"] ){
+                    $data["error_message"] = '<br /><b style="color:red">Email already in use with another account!</b>';
+                }
+                else{
+                    // update user profile
+                    $user->update( $_SESSION["user"], $email, $password, $first_name, $last_name );
 
-		// get the user data from database 
-		$user_data = $user->find_by_id( $_SESSION["user"] );
+                    // here we go
+                    $this->redirect( "users/profile" );
+                }
+            }
+        }
 
-		// load complete registration form view 
-		$data["user_data"] = $user_data;
-		$this->loadView( "users/complete_registration", $data ); 
-	}
+        // get the user data from database
+        $user_data = $user->find_by_id( $_SESSION["user"] );
 
-	function profile()
-	{
-		// user connected?
-		if( ! isset( $_SESSION["user"] ) ){
-			$this->redirect( "users/login" );
-		}
+        // load complete registration form view
+        $data["user_data"] = $user_data;
+        $this->loadView( "users/complete_registration", $data );
+    }
 
-		// load user and authentication models
-		$user = $this->loadModel( "user" );
-		$authentication = $this->loadModel( "authentication" );
+    function profile()
+    {
+        // user connected?
+        if( ! isset( $_SESSION["user"] ) ){
+            $this->redirect( "users/login" );
+        }
 
-		// get the user data from database 
-		$user_data = $user->find_by_id( $_SESSION["user"] );
+        // load user and authentication models
+        $user = $this->loadModel( "user" );
+        $authentication = $this->loadModel( "authentication" );
 
-		// provider like twitter, linkedin, do not provide the user email
-		// in this case, we should ask them to complete their profile before continuing
-		if( ! $user_data["email"] ){
-			$this->redirect( "users/complete_registration" );
-		}
+        // get the user data from database
+        $user_data = $user->find_by_id( $_SESSION["user"] );
 
-		// get the user authentication info from db, if any
-		$user_authentication = $authentication->find_by_user_id( $_SESSION["user"] );
+        // provider like twitter, linkedin, do not provide the user email
+        // in this case, we should ask them to complete their profile before continuing
+        if( ! $user_data["email"] ){
+            $this->redirect( "users/complete_registration" );
+        }
 
-		// load profile view
-		$data = array( "user_data" => $user_data, "user_authentication" => $user_authentication );
-		$this->loadView( "users/profile", $data );
-	}
+        // get the user authentication info from db, if any
+        $user_authentication = $authentication->find_by_user_id( $_SESSION["user"] );
+
+        // load profile view
+        $data = array( "user_data" => $user_data, "user_authentication" => $user_authentication );
+        $this->loadView( "users/profile", $data );
+    }
 }

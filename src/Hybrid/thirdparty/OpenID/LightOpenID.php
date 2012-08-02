@@ -4,7 +4,7 @@
 
 /**
  * This class provides a simple interface for OpenID (1.1 and 2.0) authentication.
- * Supports Yadis discovery. 
+ * Supports Yadis discovery.
  * The library requires PHP >= 5.1.2 with curl or http/https stream wrappers enabled.
  * @author Mewp
  * @copyright Copyright (c) 2010, Mewp

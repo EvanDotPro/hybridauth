@@ -196,7 +196,7 @@ class ViadeoRequest {
 
         if (count($arguments) == 0) {
             $value = 'true';
-        } else if (count($arguments) > 1) {
+        } elseif (count($arguments) > 1) {
             throw new ViadeoIllegalArgumentException();
         } else {
             $value = $arguments[0];
@@ -209,7 +209,7 @@ class ViadeoRequest {
         return $this;
     }
 
-    // -- Execute the query ---------------------------------------------------    
+    // -- Execute the query ---------------------------------------------------
     public function execute() {
         return $this->api->execute($this);
     }
@@ -259,7 +259,7 @@ class ViadeoRequest {
 //
 //     // update my interests
 //     $me->put()->interests($me->interests . ", Coding")->x();
-//     
+//
 // ============================================================================
 class ViadeoGraphObject {
 
@@ -430,7 +430,7 @@ class ViadeoAPI {
         $this->config = $config;
         return $this;
     }
- 
+
     public function setOption($name, $value) {
         $this->config[$name] = $value;
     }
@@ -438,7 +438,7 @@ class ViadeoAPI {
     private function getConfigKey($key, $mandatory = false) {
         if (isset($this->config[$key])) {
             return $this->config[$key];
-        } else if ($mandatory) {
+        } elseif ($mandatory) {
             throw new ViadeoInvalidConfigurationException(
                 "Configuration key '".$key."' is missing");
         } else {
@@ -478,7 +478,7 @@ class ViadeoAPI {
     public function setAccessToken($access_token) {
         $this->access_token = $access_token;
         if ($this->getConfigKey('store') === true) {
-            setrawcookie($this->getCookieName(), 
+            setrawcookie($this->getCookieName(),
                          '"access_token='.$access_token.'"', time() + 3600);
         }
         return $this;
@@ -490,11 +490,11 @@ class ViadeoAPI {
         if (isset($this->access_token)) {
             $token = $this->access_token;
 
-        } else if ($this->getConfigKey('access_token') != null) {
+        } elseif ($this->getConfigKey('access_token') != null) {
             $this->access_token = $this->getConfigKey('access_token');
             $token = $this->access_token;
 
-        } else if ($this->getConfigKey('store') === true) {
+        } elseif ($this->getConfigKey('store') === true) {
             if (isset($_COOKIE[$this->getCookieName()])) {
                 $cookVal = $_COOKIE[$this->getCookieName()];
                 parse_str(str_replace('"', '', $cookVal), $cookArr);
@@ -520,11 +520,11 @@ class ViadeoAPI {
         if (isset($this->authorization_code)) {
             $code = $this->authorization_code;
 
-        } else if (isset($_REQUEST["code"])) {
+        } elseif (isset($_REQUEST["code"])) {
             $this->authorization_code = $_REQUEST["code"];
             $code = $this->authorization_code;
 
-        } else if (isset($_REQUEST["error"])) {
+        } elseif (isset($_REQUEST["error"])) {
             throw new ViadeoOAuth2Exception($_REQUEST["error"]);
         }
 
@@ -552,7 +552,7 @@ class ViadeoAPI {
                 'client_id'       =>    self::getConfigKey('client_id', true),
                 'redirect_uri'    =>    self::getRedirectURI()
               ), $extras);
-        $url = self::$authorize_url . "?" . http_build_query($params, null, '&');        
+        $url = self::$authorize_url . "?" . http_build_query($params, null, '&');
         return $url;
     }
 
@@ -581,8 +581,8 @@ class ViadeoAPI {
         $ch = curl_init(self::$token_url);
         curl_setopt_array($ch, $curl_opts);
 
-		// mod:btw:dont yell at me
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // mod:btw:dont yell at me
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $result = curl_exec($ch);
 
@@ -597,7 +597,7 @@ class ViadeoAPI {
         try {
             if (isset($result->error)) {
                 throw new ViadeoOAuth2Exception($result->error);
-            } else if (isset($result->access_token)) {
+            } elseif (isset($result->access_token)) {
                 $this->setAccessToken($result->access_token);
             } else {
                 throw new ViadeoOAuth2Exception("No token returned !");
@@ -618,7 +618,7 @@ class ViadeoAPI {
     public function OAuth_auto() {
         if ($this->isAuthenticated()) {
             return;
-        } else if ($this->getAuthorizationCode() != null) {
+        } elseif ($this->getAuthorizationCode() != null) {
             $this->setAccessTokenFromCode();
         } else {
             $this->authorize();
@@ -679,8 +679,8 @@ class ViadeoAPI {
         $ch = curl_init($url);
         curl_setopt_array($ch, $curl_opts);
 
-		// mod:btw:dont yell at me
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // mod:btw:dont yell at me
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $result = curl_exec($ch);
 
